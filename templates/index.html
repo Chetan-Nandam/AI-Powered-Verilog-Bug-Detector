@@ -15,9 +15,13 @@
 
     <h3>Upload a Verilog File</h3>
 
-    <form>
+    <form action="/upload" method="POST" enctype="multipart/form-data">
 
-        <input type="file">
+        <input
+            type="file"
+            name="verilog_file"
+            accept=".v"
+            required>
 
         <br><br>
 

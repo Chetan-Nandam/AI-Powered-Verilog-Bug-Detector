@@ -12,44 +12,39 @@ def explain_error(error_info):
     knowledge = get_error_knowledge(error_info["type"])
 
     if knowledge is None:
-        print("\nAI Explanation")
-        print("------------------------------")
-        print("No explanation available for this error.")
-        return
-
-    print("\nAI Explanation")
-    print("------------------------------")
+        return "No explanation available for this error."
 
     # Try Gemini first
     try:
-        ai_response = ask_gemini(error_info, knowledge)
-        print(ai_response)
-        return
+        return ask_gemini(error_info, knowledge)
 
-    except Exception as e:
-        print(f"(Gemini unavailable, using local knowledge base)\n")
-        print(f"Reason: {e}\n")
+    except Exception:
+        pass
 
     # ---------- Fallback ----------
-    print(knowledge["title"])
-    print()
+    response = []
 
-    print(knowledge["explanation"])
-    print()
+    response.append(knowledge["title"])
+    response.append("")
+    response.append(knowledge["explanation"])
+    response.append("")
+    response.append(
+        f"The compiler reported this near line {error_info['line']}."
+    )
+    response.append(
+        "In Verilog, the actual mistake is sometimes on the previous line."
+    )
+    response.append("")
+    response.append("Original compiler message:")
+    response.append(error_info["message"])
+    response.append("")
+    response.append("Possible causes:")
 
-    print(f"The compiler reported this near line {error_info['line']}.")
-    print("In Verilog, the actual mistake is sometimes on the previous line.")
-    print()
-
-    print("Original compiler message:")
-    print(error_info["message"])
-    print()
-
-    print("Possible causes:")
     for cause in knowledge["causes"]:
-        print(f"- {cause}")
+        response.append(f"- {cause}")
 
-    print()
+    response.append("")
+    response.append("Suggested Fix:")
+    response.append(knowledge["suggestion"])
 
-    print("Suggested Fix:")
-    print(knowledge["suggestion"])
+    return "\n".join(response)
