@@ -1,18 +1,65 @@
+import re
+
+
 def parse_error(compiler_error):
+    """
+    Parses all Icarus Verilog compiler errors.
 
-    error_parts = compiler_error.split(":")
+    Returns:
+        {
+            "file": "...",
+            "line": 7,
+            "type": "...",
+            "message": "...",
+            "errors": [
+                {
+                    "file": "...",
+                    "line": 7,
+                    "type": "...",
+                    "message": "..."
+                },
+                ...
+            ]
+        }
+    """
 
-    error_file = error_parts[0]
-    error_line = int(error_parts[1])
-    error_type = ":".join(error_parts[2:]).split("\n")[0].strip()
+    errors = []
 
-    error_message = compiler_error.strip()
+    lines = compiler_error.splitlines()
 
-    error_info = {
-        "file": error_file,
-        "line": error_line,
-        "type": error_type,
-        "message": error_message
+    pattern = r"^(.*?):(\d+):\s*(.*)$"
+
+    for line in lines:
+
+        match = re.match(pattern, line)
+
+        if match:
+
+            file_name = match.group(1).strip()
+            line_number = int(match.group(2))
+            message = match.group(3).strip()
+
+            errors.append({
+                "file": file_name,
+                "line": line_number,
+                "type": message,
+                "message": message
+            })
+
+    if len(errors) == 0:
+
+        return {
+            "file": None,
+            "line": None,
+            "type": "Unknown Error",
+            "message": compiler_error.strip(),
+            "errors": []
+        }
+
+    return {
+        "file": errors[0]["file"],
+        "line": errors[0]["line"],
+        "type": errors[0]["type"],
+        "message": compiler_error.strip(),
+        "errors": errors
     }
-
-    return error_info

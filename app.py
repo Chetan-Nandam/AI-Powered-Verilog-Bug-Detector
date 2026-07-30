@@ -31,32 +31,12 @@ def upload():
 
     uploaded_file.save(file_path)
 
-    # Run the AI Verilog Bug Detector
     result = compile_verilog(file_path)
 
-    return f"""
-    <html>
-
-    <head>
-        <title>Analysis Result</title>
-    </head>
-
-    <body>
-
-        <h1>🤖 AI Verilog Bug Detector</h1>
-
-        <hr>
-
-        <pre>{result}</pre>
-
-        <br>
-
-        <a href="/">Analyse Another File</a>
-
-    </body>
-
-    </html>
-    """
+    return render_template(
+        "result.html",
+        result=result
+    )
 
 
 if __name__ == "__main__":

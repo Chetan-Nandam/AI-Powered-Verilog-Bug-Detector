@@ -13,52 +13,69 @@ def compile_verilog(verilog_file):
         text=True
     )
 
-    output = []
+    # Read original source code
+    try:
+        with open(verilog_file, "r") as file:
+            source_code = file.read()
 
-    output.append("=" * 40)
-    output.append("AI VERILOG BUG DETECTOR")
-    output.append("=" * 40)
-    output.append(f"File   : {verilog_file}")
+    except Exception:
+        source_code = "Unable to read source code."
+
+    source_lines = source_code.splitlines()
+
+    response = {
+        "file": verilog_file,
+        "source_code": source_code,
+        "source_lines": source_lines
+    }
+
+    # ----------------------------
+    # Compilation Successful
+    # ----------------------------
 
     if result.returncode == 0:
 
-        output.append("Status : SUCCESS")
-        output.append("")
-        output.append("Compilation completed successfully.")
+        response["status"] = "SUCCESS"
+        response["compiler_output"] = "Compilation completed successfully."
+
+        response["error_type"] = None
+        response["line"] = None
+        response["errors"] = []
+
+        response["ai_response"] = None
+
+    # ----------------------------
+    # Compilation Failed
+    # ----------------------------
 
     else:
 
-        output.append("Status : FAILED")
-        output.append("")
-
         compiler_error = result.stderr
-
-        output.append("Compiler Output:")
-        output.append(compiler_error)
 
         error_info = parse_error(compiler_error)
 
-        output.append("")
-        output.append("Parsed Error Information")
-        output.append("-" * 30)
-        output.append(f"File : {error_info['file']}")
-        output.append(f"Line : {error_info['line']}")
-        output.append(f"Type : {error_info['type']}")
-        output.append("")
-
         ai_response = explain_error(error_info)
 
-        output.append("AI Explanation")
-        output.append("-" * 30)
-        output.append(str(ai_response))
+        response["status"] = "FAILED"
 
-    return "\n".join(output)
+        response["compiler_output"] = compiler_error
+
+        # Backward compatibility
+        response["error_type"] = error_info["type"]
+        response["line"] = error_info["line"]
+
+        # NEW: Complete list of compiler errors
+        response["errors"] = error_info["errors"]
+
+        response["ai_response"] = ai_response
+
+    return response
 
 
 if __name__ == "__main__":
 
     if len(sys.argv) != 2:
-        print("Usage: py compiler/compile.py <verilog_file>")
+        print("Usage: python compiler/compile.py <verilog_file>")
         sys.exit(1)
 
     print(compile_verilog(sys.argv[1]))

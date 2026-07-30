@@ -1,0 +1,233 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Analysis Result | AI Verilog Bug Detector</title>
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap"
+        rel="stylesheet">
+
+    <link rel="stylesheet"
+        href="{{ url_for('static', filename='css/style.css') }}">
+
+</head>
+
+<body>
+
+<div class="background-glow glow-1"></div>
+<div class="background-glow glow-2"></div>
+
+<div class="page">
+
+    <!-- ================= HEADER ================= -->
+
+    <header class="header">
+
+        <div class="logo-section">
+
+            <div class="logo-icon">
+                🤖
+            </div>
+
+            <div>
+
+                <h2>AI Verilog Bug Detector</h2>
+
+                <p>AI-Powered RTL Analysis Platform</p>
+
+            </div>
+
+        </div>
+
+        {% if result.status=="SUCCESS" %}
+
+        <div class="status">
+
+            <span class="status-dot"></span>
+
+            Analysis Successful
+
+        </div>
+
+        {% else %}
+
+        <div class="status failed-status">
+
+            <span class="failed-dot"></span>
+
+            Errors Detected
+
+        </div>
+
+        {% endif %}
+
+    </header>
+
+    <!-- ================= SUMMARY ================= -->
+
+    <section class="summary-grid">
+
+        <div class="summary-card">
+
+            <span>📁 File</span>
+
+            <h3>{{ result.file }}</h3>
+
+        </div>
+
+        <div class="summary-card">
+
+            <span>Status</span>
+
+            <h3>{{ result.status }}</h3>
+
+        </div>
+
+        <div class="summary-card">
+
+            <span>Error</span>
+
+            <h3>{{ result.error_type }}</h3>
+
+        </div>
+
+        <div class="summary-card">
+
+            <span>Line</span>
+
+            <h3>{{ result.line }}</h3>
+
+        </div>
+
+    </section>
+
+{% if result.status=="FAILED" %}
+
+    <!-- ================= AI CARDS ================= -->
+
+    <section class="analysis-grid">
+
+        <div class="dashboard-card">
+
+            <h2>💬 AI Summary</h2>
+
+            <p>{{ result.ai_response.summary }}</p>
+
+        </div>
+
+        <div class="dashboard-card">
+
+            <h2>⚠ Cause</h2>
+
+            <p>{{ result.ai_response.cause }}</p>
+
+        </div>
+
+        <div class="dashboard-card">
+
+            <h2>💡 Suggested Fix</h2>
+
+            <p>{{ result.ai_response.fix }}</p>
+
+        </div>
+
+        <div class="dashboard-card">
+
+            <h2>📄 Compiler Output</h2>
+
+            <pre class="compiler-output">{{ result.compiler_output }}</pre>
+
+        </div>
+
+    </section>
+
+    <!-- ================= CODE ================= -->
+<section class="code-comparison">
+
+    <!-- Original -->
+
+    <div class="dashboard-card">
+
+        <div class="code-toolbar">
+            <h2>📄 Original Code</h2>
+        </div>
+
+        <div class="source-viewer">
+
+            <table class="code-table">
+
+                <tbody>
+
+                {% for line in result.source_lines %}
+
+                    <tr class="{% if loop.index == result.line|int %}error-row{% endif %}">
+
+                        <td class="line-no">
+
+                            {{ loop.index }}
+
+                        </td>
+
+                        <td class="code-text">{{ line }}</td>
+
+                    </tr>
+
+                {% endfor %}
+
+                </tbody>
+
+            </table>
+
+        </div>
+
+    </div>
+
+    <!-- Corrected -->
+
+    <div class="dashboard-card">
+
+        <div class="code-toolbar">
+
+            <h2>📝 Corrected Code</h2>
+
+            <button class="copy-btn" onclick="copyCode()">
+
+                📋 Copy Code
+
+            </button>
+
+        </div>
+
+        <pre id="codeblock" class="code-block">{{ result.ai_response.code }}</pre>
+
+    </div>
+
+</section>
+{% endif %}
+
+    <!-- ================= FOOTER ================= -->
+
+    <div class="bottom-actions">
+
+        <a href="/" class="back-button">
+
+            ← Analyse Another File
+
+        </a>
+
+    </div>
+
+</div>
+
+<script src="{{ url_for('static', filename='js/app.js') }}"></script>
+
+</body>
+
+</html>

@@ -18,33 +18,27 @@ def explain_error(error_info):
     try:
         return ask_gemini(error_info, knowledge)
 
-    except Exception:
-        pass
+    except Exception as e:
+        return f"""
+Gemini Error
 
-    # ---------- Fallback ----------
-    response = []
+{e}
 
-    response.append(knowledge["title"])
-    response.append("")
-    response.append(knowledge["explanation"])
-    response.append("")
-    response.append(
-        f"The compiler reported this near line {error_info['line']}."
-    )
-    response.append(
-        "In Verilog, the actual mistake is sometimes on the previous line."
-    )
-    response.append("")
-    response.append("Original compiler message:")
-    response.append(error_info["message"])
-    response.append("")
-    response.append("Possible causes:")
+-------------------------
 
-    for cause in knowledge["causes"]:
-        response.append(f"- {cause}")
+Fallback Explanation
 
-    response.append("")
-    response.append("Suggested Fix:")
-    response.append(knowledge["suggestion"])
+{knowledge["title"]}
 
-    return "\n".join(response)
+{knowledge["explanation"]}
+
+The compiler reported this near line {error_info["line"]}.
+
+Original compiler message:
+
+{error_info["message"]}
+
+Suggested Fix:
+
+{knowledge["suggestion"]}
+"""
