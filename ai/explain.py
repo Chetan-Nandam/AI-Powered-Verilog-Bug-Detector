@@ -5,40 +5,49 @@ from ai.llm import ask_gemini
 def explain_error(error_info):
     """
     Generate an explanation for a parsed compiler error.
-    Uses Gemini AI when possible and falls back to the
-    built-in rule-based explanation if AI is unavailable.
+    Uses Gemini AI when available.
+    Falls back to built-in knowledge if Gemini is unavailable.
     """
 
     knowledge = get_error_knowledge(error_info["type"])
 
     if knowledge is None:
-        return "No explanation available for this error."
 
-    # Try Gemini first
+        return {
+            "summary": "No explanation available.",
+            "cause": "Unknown compiler error.",
+            "fix": "Please inspect the compiler output.",
+            "code": ""
+        }
+
+    # -------------------------
+    # Try Gemini
+    # -------------------------
+
     try:
+
         return ask_gemini(error_info, knowledge)
 
+    # -------------------------
+    # Fallback
+    # -------------------------
+
     except Exception as e:
-        return f"""
-Gemini Error
 
-{e}
+        print("\n========== GEMINI EXCEPTION ==========")
+        print(e)
 
--------------------------
+        return {
 
-Fallback Explanation
+            "summary":
+                knowledge["title"],
 
-{knowledge["title"]}
+            "cause":
+                knowledge["explanation"],
 
-{knowledge["explanation"]}
+            "fix":
+                knowledge["suggestion"],
 
-The compiler reported this near line {error_info["line"]}.
+            "code": ""
 
-Original compiler message:
-
-{error_info["message"]}
-
-Suggested Fix:
-
-{knowledge["suggestion"]}
-"""
+        }

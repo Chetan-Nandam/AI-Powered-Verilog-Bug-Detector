@@ -246,6 +246,37 @@
         </footer>
 
     </div>
+    <!-- ===============================
+            AI Loading Screen
+        ================================ -->
+
+        <div id="loadingOverlay" class="loading-overlay">
+
+         <div class="loading-card">
+
+                <div class="loading-logo">
+            🤖
+                </div>
+
+                <h2>AI Verilog Bug Detector</h2>
+
+                <p class="loading-subtitle">
+
+                    Analyzing your Verilog...
+
+                </p>
+
+                <div class="loading-spinner"></div>
+
+                <p id="loadingMessage">
+
+                    ⚙ Running Icarus Verilog...
+
+                </p>
+
+            </div>
+
+        </div>
 
     <script
         src="{{ url_for('static', filename='js/app.js') }}">

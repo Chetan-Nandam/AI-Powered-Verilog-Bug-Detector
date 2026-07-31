@@ -1171,3 +1171,134 @@ CODE VIEWER
 .error-row .code-text pre{
     color:#ffffff;
 }
+/*==================================================
+AI LOADING SCREEN
+==================================================*/
+
+.loading-overlay{
+
+    position:fixed;
+
+    inset:0;
+
+    background:rgba(8,12,20,.92);
+
+    backdrop-filter:blur(12px);
+
+    display:none;
+
+    justify-content:center;
+
+    align-items:center;
+
+    z-index:9999;
+
+}
+
+.loading-card{
+
+    width:420px;
+
+    background:#161b22;
+
+    border:1px solid #30363d;
+
+    border-radius:20px;
+
+    padding:40px;
+
+    text-align:center;
+
+    box-shadow:0 20px 60px rgba(0,0,0,.5);
+
+}
+
+.loading-logo{
+
+    font-size:56px;
+
+    margin-bottom:15px;
+
+    animation:floatLogo 2s ease-in-out infinite;
+
+}
+
+.loading-card h2{
+
+    color:white;
+
+    margin-bottom:10px;
+
+}
+
+.loading-subtitle{
+
+    color:#9aa4b2;
+
+    margin-bottom:30px;
+
+}
+
+.loading-spinner{
+
+    width:60px;
+
+    height:60px;
+
+    border:5px solid #30363d;
+
+    border-top:5px solid #3b82f6;
+
+    border-radius:50%;
+
+    margin:auto;
+
+    animation:spin 1s linear infinite;
+
+}
+
+#loadingMessage{
+
+    margin-top:25px;
+
+    color:#7ee787;
+
+    font-size:16px;
+
+    font-weight:500;
+
+    min-height:24px;
+
+}
+
+@keyframes spin{
+
+    from{
+
+        transform:rotate(0deg);
+
+    }
+
+    to{
+
+        transform:rotate(360deg);
+
+    }
+
+}
+
+@keyframes floatLogo{
+
+    0%,100%{
+
+        transform:translateY(0);
+
+    }
+
+    50%{
+
+        transform:translateY(-8px);
+
+    }
+
+}

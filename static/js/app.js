@@ -1,130 +1,131 @@
-/* ==========================================
-   AI Verilog Bug Detector
-   app.js
-========================================== */
+// ======================================
+// File Selection
+// ======================================
 
-const fileInput = document.getElementById("fileInput");
-const fileName = document.getElementById("fileName");
-const uploadArea = document.querySelector(".upload-area");
-const form = document.querySelector("form");
-const analyseButton = document.getElementById("analyseButton");
+document.addEventListener("DOMContentLoaded", () => {
 
-/* ===========================
-   FILE SELECTION
-=========================== */
+    const input = document.getElementById("fileInput");
+    const fileName = document.getElementById("fileName");
 
-fileInput.addEventListener("change", function () {
+    if (input && fileName) {
 
-    if (this.files.length > 0) {
+        input.addEventListener("change", () => {
 
-        fileName.innerHTML = "📄 " + this.files[0].name;
+            if (input.files.length > 0) {
 
-        fileName.style.color = "#22c55e";
+                fileName.innerHTML = "✅ " + input.files[0].name;
 
-    } else {
+            } else {
 
-        fileName.innerHTML = "No file selected";
+                fileName.innerHTML = "No file selected";
 
-        fileName.style.color = "#94a3b8";
+            }
+
+        });
 
     }
 
 });
 
-/* ===========================
-   DRAG & DROP
-=========================== */
 
-["dragenter", "dragover"].forEach(eventName => {
+// ======================================
+// Copy Corrected Code
+// ======================================
 
-    uploadArea.addEventListener(eventName, e => {
+function copyCode() {
 
-        e.preventDefault();
-        e.stopPropagation();
+    const codeBlock = document.getElementById("codeblock");
 
-        uploadArea.style.borderColor = "#7c5cff";
-        uploadArea.style.background = "#1b2638";
+    if (!codeBlock) return;
+
+    navigator.clipboard.writeText(codeBlock.innerText);
+
+    const btn = document.querySelector(".copy-btn");
+
+    if (!btn) return;
+
+    btn.innerHTML = "✅ Copied!";
+
+    setTimeout(() => {
+
+        btn.innerHTML = "📋 Copy Code";
+
+    }, 2000);
+
+}
+
+
+// ======================================
+// AI Loading Screen
+// ======================================
+
+document.addEventListener("DOMContentLoaded", () => {
+
+    const form = document.querySelector("form");
+
+    if (!form) return;
+
+    const overlay = document.getElementById("loadingOverlay");
+
+    const message = document.getElementById("loadingMessage");
+
+    const messages = [
+
+        "⚙ Running Icarus Verilog...",
+
+        "🔍 Detecting compiler errors...",
+
+        "🤖 Contacting Gemini AI...",
+
+        "🧠 Understanding your RTL...",
+
+        "🛠 Generating corrected code...",
+
+        "✨ Preparing dashboard..."
+
+    ];
+
+    let index = 0;
+
+    let interval;
+
+    form.addEventListener("submit", () => {
+
+        overlay.style.display = "flex";
+
+        message.innerHTML = messages[0];
+
+        interval = setInterval(() => {
+
+            index++;
+
+            message.innerHTML = messages[index % messages.length];
+
+        }, 1800);
 
     });
 
 });
 
-["dragleave", "drop"].forEach(eventName => {
 
-    uploadArea.addEventListener(eventName, e => {
-
-        e.preventDefault();
-        e.stopPropagation();
-
-        uploadArea.style.borderColor = "#4f8cff";
-        uploadArea.style.background = "transparent";
-
-    });
-
-});
-
-uploadArea.addEventListener("drop", function (e) {
-
-    const files = e.dataTransfer.files;
-
-    if (files.length > 0) {
-
-        fileInput.files = files;
-
-        fileName.innerHTML = "📄 " + files[0].name;
-
-        fileName.style.color = "#22c55e";
-
-    }
-
-});
-
-/* ===========================
-   FORM SUBMIT
-=========================== */
-
-form.addEventListener("submit", function () {
-
-    analyseButton.disabled = true;
-
-    analyseButton.innerHTML = "⏳ Analysing Verilog...";
-
-});
-
-/* ===========================
-   CARD ANIMATION
-=========================== */
-
-document.querySelectorAll(".feature-card").forEach(card => {
-
-    card.addEventListener("mouseenter", () => {
-
-        card.style.transform = "translateY(-8px) scale(1.02)";
-
-    });
-
-    card.addEventListener("mouseleave", () => {
-
-        card.style.transform = "translateY(0px) scale(1)";
-
-    });
-
-});
-
-/* ===========================
-   PAGE FADE-IN
-=========================== */
+// ======================================
+// Auto Scroll to Error Line
+// ======================================
 
 window.addEventListener("load", () => {
 
-    document.body.style.opacity = "0";
+    const errorLine = document.querySelector(".error-row");
 
-    requestAnimationFrame(() => {
+    if (errorLine) {
 
-        document.body.style.transition = "opacity 0.5s ease";
+        errorLine.scrollIntoView({
 
-        document.body.style.opacity = "1";
+            behavior: "smooth",
 
-    });
+            block: "center"
+
+        });
+
+    }
 
 });

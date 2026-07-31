@@ -167,7 +167,9 @@
 
                 {% for line in result.source_lines %}
 
-                    <tr class="{% if loop.index == result.line|int %}error-row{% endif %}">
+                    <tr
+                        id="line-{{ loop.index }}"
+                        class="{% if loop.index in result.error_lines %}error-row{% endif %}">
 
                         <td class="line-no">
 
