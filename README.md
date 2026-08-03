@@ -156,11 +156,13 @@ AI-Powered-Verilog-Bug-Detector
 
 ---
 
+---
+
 # 📸 Screenshots
 
-> *(Screenshots will be added after deployment.)*
+### 🏠 Landing Page
 
-## 🏠 Landing Page
+The homepage where users can upload Verilog source files for AI-assisted analysis.
 
 ![Landing Page](assets/screenshots/landing_page.png)
 
@@ -168,19 +170,25 @@ AI-Powered-Verilog-Bug-Detector
 
 ### 🤖 AI Loading Screen
 
+A dynamic loading interface that displays real-time analysis progress while the compiler and AI process the uploaded Verilog code.
+
 ![Loading Screen](assets/screenshots/loading_screen.png)
 
 ---
 
 ### 📊 Analysis Dashboard
 
+Displays compiler output, AI-generated summary, probable cause, suggested fix, and overall analysis results.
+
 ![Analysis Dashboard](assets/screenshots/analysis_dashboard.png)
+
 ---
 
 ### 📄 Original vs Corrected Code
-![Code Viewer](assets/screenshots/code_viewer.png)
 
----
+Side-by-side comparison of the uploaded Verilog code and the AI-generated corrected version, with compiler error lines automatically highlighted.
+
+![Code Viewer](assets/screenshots/code_viewer.png)
 
 # ⚙ Installation
 
