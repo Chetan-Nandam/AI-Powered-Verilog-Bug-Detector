@@ -160,27 +160,25 @@ AI-Powered-Verilog-Bug-Detector
 
 > *(Screenshots will be added after deployment.)*
 
-### 🏠 Landing Page
+## 🏠 Landing Page
 
-*(Insert screenshot here)*
+![Landing Page](assets/screenshots/landing_page.png)
 
 ---
 
 ### 🤖 AI Loading Screen
 
-*(Insert screenshot here)*
+![Loading Screen](assets/screenshots/loading_screen.png)
 
 ---
 
 ### 📊 Analysis Dashboard
 
-*(Insert screenshot here)*
-
+![Analysis Dashboard](assets/screenshots/analysis_dashboard.png)
 ---
 
 ### 📄 Original vs Corrected Code
-
-*(Insert screenshot here)*
+![Code Viewer](assets/screenshots/code_viewer.png)
 
 ---
 
