@@ -1,9 +1,12 @@
 import os
+import re
 
 from dotenv import load_dotenv
 from google import genai
 
 from ai.prompts import SYSTEM_PROMPT
+
+print("LLM FILE:", __file__)
 
 load_dotenv()
 
@@ -12,35 +15,18 @@ client = genai.Client(
 )
 
 
-def extract_section(text, start_marker, end_marker=None):
-    try:
-        start = text.index(start_marker) + len(start_marker)
-
-        if end_marker:
-            end = text.index(end_marker, start)
-            return text[start:end].strip()
-
-        return text[start:].strip()
-
-    except ValueError:
-        return ""
-
-
 def clean_code_block(code):
     """
-    Removes Markdown code fences from Gemini output.
+    Remove markdown code fences.
     """
+
+    if not code:
+        return ""
 
     code = code.strip()
 
-    if code.startswith("```verilog"):
-        code = code[len("```verilog"):]
-
-    elif code.startswith("```"):
-        code = code[len("```"):]
-
-    if code.endswith("```"):
-        code = code[:-3]
+    code = code.replace("```verilog", "")
+    code = code.replace("```", "")
 
     return code.strip()
 
@@ -75,35 +61,60 @@ Known Possible Causes:
 
 Known Suggestion:
 {knowledge["suggestion"]}
+
+IMPORTANT:
+Return ONLY the required format.
+Do NOT skip any section.
+Always include corrected Verilog code.
 """
 
+    print("MODEL USED: gemini-3.5-flash")
+
     response = client.models.generate_content(
-        model="models/gemini-3.5-flash",
+        model="gemini-3.5-flash",
         contents=prompt
     )
 
     ai_text = response.text
 
+    print("\n========== RAW GEMINI RESPONSE ==========\n")
+    print(ai_text)
+    print("\n=========================================\n")
+
+    def section(name):
+
+        pattern = rf"===\s*{name}\s*===\s*(.*?)(?=\n===|\Z)"
+
+        match = re.search(pattern, ai_text, re.DOTALL)
+
+        if match:
+            return match.group(1).strip()
+
+        return ""
+
+    summary = section("SUMMARY")
+    cause = section("CAUSE")
+    fix = section("FIX")
+    code = clean_code_block(section("CODE"))
+
+    print("\n========== PARSED DATA ==========")
+    print("SUMMARY:")
+    print(summary)
+
+    print("\nCAUSE:")
+    print(cause)
+
+    print("\nFIX:")
+    print(fix)
+
+    print("\nCODE LENGTH:", len(code))
+    print("\nFIRST 200 CHARACTERS:")
+    print(repr(code[:200]))
+    print("=================================\n")
+
     return {
-        "summary": extract_section(
-            ai_text,
-            "===SUMMARY===",
-            "===CAUSE==="
-        ),
-        "cause": extract_section(
-            ai_text,
-            "===CAUSE===",
-            "===FIX==="
-        ),
-        "fix": extract_section(
-            ai_text,
-            "===FIX===",
-            "===CODE==="
-        ),
-        "code": clean_code_block(
-            extract_section(
-                ai_text,
-                "===CODE==="
-            )
-        )
+        "summary": summary,
+        "cause": cause,
+        "fix": fix,
+        "code": code
     }
