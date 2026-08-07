@@ -49,19 +49,19 @@ The project is intended for students, beginners, and anyone learning digital des
 
 ### Landing Page
 
-![Landing Page](screenshots/home.png)
+![Landing Page](screenshots/landing_page.png)
 
 ---
 
 ### AI Analysis
 
-![Analysis](screenshots/dashboard.png)
+![Analysis](screenshots/analysis_dashboard.png)
 
 ---
 
 ### Original vs Corrected Code
 
-![Code Viewer](screenshots/codeviewer.png)
+![Code Viewer](screenshots/code_viewer.png)
 
 ---
 
