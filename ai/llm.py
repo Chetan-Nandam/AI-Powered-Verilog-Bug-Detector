@@ -73,6 +73,7 @@ Always include corrected Verilog code.
         )
 
         ai_text = response.text
+        print(ai_text)
 
     except Exception:
         raise

@@ -1,133 +1,173 @@
 # 🤖 VeriAssist
 
 ### AI-Powered Verilog Learning & Debugging Assistant
-![Python](https://img.shields.io/badge/Python-3.12-blue?logo=python)
-![Flask](https://img.shields.io/badge/Flask-Web_App-black?logo=flask)
-![Gemini](https://img.shields.io/badge/Google-Gemini_AI-blue?logo=google)
-![Icarus Verilog](https://img.shields.io/badge/Icarus-Verilog-green)
-![HTML](https://img.shields.io/badge/HTML-Frontend-orange?logo=html5)
-![License](https://img.shields.io/badge/License-MIT-success)
+
+![Python](https://img.shields.io/badge/Python-3.12-blue)
+![Flask](https://img.shields.io/badge/Flask-3.x-black)
+![Docker](https://img.shields.io/badge/Docker-Ready-blue)
+![Status](https://img.shields.io/badge/Version-v1.0-success)
+
 ---
 
-# 📖 About VeriAssist
+## About
 
-Learning Verilog can be challenging because most existing tools focus on **compilation and simulation** rather than helping beginners understand compiler errors.
+VeriAssist is a web-based Verilog debugging assistant built to help students understand compiler errors instead of simply displaying them.
 
-As an Electronics and Communication Engineering (ECE) student, I found that while compilers could detect syntax errors, they rarely explained **why the error occurred, how to fix it, or what the corrected code should look like**. This often made the learning process slower and more frustrating.
+Most Verilog compilers are excellent at detecting syntax errors, but they don't explain why the error occurred or how to fix it. While learning Verilog, I often found myself searching documentation or forums to understand compiler messages. This project was built to make that process easier.
 
-**VeriAssist** was built to bridge this gap by combining traditional Verilog compilation with AI-powered explanations. Instead of simply displaying compiler messages, it helps users understand the logic behind the errors, suggests possible fixes, and generates corrected Verilog code.
+VeriAssist combines **Icarus Verilog** with **Google Gemini AI** to analyze compiler errors, explain their cause, suggest fixes, and generate corrected Verilog code through a simple web interface.
 
-The goal of VeriAssist is to make learning Verilog more interactive, intuitive, and educational for students, beginners, and anyone starting their journey in digital design.
+The project is intended for students, beginners, and anyone learning digital design.
+
 ---
 
-# ✨ Features
+## Features
 
-- 📄 Upload Verilog (`.v`) source files through a simple web interface.
-- ⚙️ Compile Verilog designs using **Icarus Verilog**.
-- 🤖 Generate AI-powered explanations of compiler errors using **Google Gemini**.
-- 💡 Identify likely causes and suggest practical fixes.
-- 📝 Generate corrected Verilog code based on the detected error.
-- 🎨 Modern and responsive user interface.
-- 📌 Highlight compiler error lines in the original source code.
-- 📜 Side-by-side view of original and AI-corrected code.
-- 📋 One-click copy of the corrected code.
-- ⏳ AI loading screen with real-time analysis messages.
-- 🛡️ Graceful fallback when the AI service is temporarily unavailable.
+- Upload Verilog (`.v`) source files
+- Compile designs using **Icarus Verilog**
+- Parse compiler errors automatically
+- AI-generated explanation of compiler errors
+- Suggested fixes for detected errors
+- AI-generated corrected Verilog code
+- Highlight compiler error lines
+- Side-by-side original and corrected code
+- Copy corrected code with one click
+- Responsive web interface
+- Graceful fallback when the AI service is unavailable
+
 ---
 
-# 🏗️ System Architecture
+## Live Demo
 
-```text
-                User
+**Render Deployment**
 
-                  │
+<p align="center">
+  <img src="assets/VeriAssistDemogif.gif" alt="VeriAssist Demo" width="900"/>
+</p>
 
-                  ▼
+## Screenshots
 
-        Upload Verilog File
+### Landing Page
 
-                  │
+![Landing Page](screenshots/home.png)
 
-                  ▼
+---
 
-           Flask Backend
+### AI Analysis
 
-        ┌───────────────┐
-        │               │
-        ▼               ▼
+![Analysis](screenshots/dashboard.png)
 
- Icarus Verilog     Gemini AI
+---
 
-        │               │
+### Original vs Corrected Code
 
-        └──────┬────────┘
-               ▼
+![Code Viewer](screenshots/codeviewer.png)
 
-     AI Error Analysis
+---
 
-               │
+## How VeriAssist Works
 
-               ▼
-
- Interactive Results Dashboard
 ```
----
-
-# 🚀 Workflow
-
-```text
-Upload Verilog File
-        │
-        ▼
-Compile using Icarus Verilog
-        │
-        ▼
-Parse Compiler Errors
-        │
-        ▼
-Generate AI Explanation
-        │
-        ▼
-Generate Corrected Code
-        │
-        ▼
-Display Interactive Dashboard
+User uploads Verilog file
+          │
+          ▼
+Flask receives the file
+          │
+          ▼
+Icarus Verilog compiles source code
+          │
+          ▼
+Compiler errors are parsed
+          │
+          ▼
+Gemini AI generates:
+ • Summary
+ • Cause
+ • Suggested Fix
+ • Corrected Code
+          │
+          ▼
+Results displayed on dashboard
 ```
 
 ---
 
-# 🛠 Technology Stack
+## System Architecture
 
-## Backend
+```
+                  User
+
+                    │
+
+                    ▼
+
+          Upload Verilog File
+
+                    │
+
+                    ▼
+
+             Flask Backend
+
+          ┌───────────────┐
+          │               │
+          ▼               ▼
+
+   Icarus Verilog     Gemini AI
+
+          │               │
+
+          └──────┬────────┘
+                 ▼
+
+        AI Error Analysis
+
+                 │
+
+                 ▼
+
+      Interactive Results Dashboard
+```
+
+---
+
+## Tech Stack
+
+### Backend
 
 - Python
 - Flask
 
-## Compiler
+### Frontend
+
+- HTML
+- CSS
+- JavaScript
+
+### Compiler
 
 - Icarus Verilog
 
-## Artificial Intelligence
+### AI
 
 - Google Gemini API
 
-## Frontend
+### Deployment
 
-- HTML5
-- CSS3
-- JavaScript
+- Docker
+- Render
 
-## Version Control
+### Version Control
 
 - Git
 - GitHub
 
 ---
 
-# 📂 Project Structure
+## Project Structure
 
-```text
-AI-Powered-Verilog-Bug-Detector
+```
+VeriAssist
 │
 ├── ai/
 │   ├── explain.py
@@ -141,58 +181,25 @@ AI-Powered-Verilog-Bug-Detector
 │
 ├── static/
 │   ├── css/
-│   └── js/
+│   ├── js/
+│   └── screenshots/
 │
 ├── templates/
 │   ├── index.html
 │   └── result.html
 │
-├── examples/
 ├── uploads/
 ├── app.py
+├── Dockerfile
 ├── requirements.txt
 └── README.md
 ```
 
 ---
 
----
+## Installation
 
-# 📸 Screenshots
-
-### 🏠 Landing Page
-
-The homepage where users can upload Verilog source files for AI-assisted analysis.
-
-![Landing Page](assets/screenshots/landing_page.png)
-
----
-
-### 🤖 AI Loading Screen
-
-A dynamic loading interface that displays real-time analysis progress while the compiler and AI process the uploaded Verilog code.
-
-![Loading Screen](assets/screenshots/loading_screen.png)
-
----
-
-### 📊 Analysis Dashboard
-
-Displays compiler output, AI-generated summary, probable cause, suggested fix, and overall analysis results.
-
-![Analysis Dashboard](assets/screenshots/analysis_dashboard.png)
-
----
-
-### 📄 Original vs Corrected Code
-
-Side-by-side comparison of the uploaded Verilog code and the AI-generated corrected version, with compiler error lines automatically highlighted.
-
-![Code Viewer](assets/screenshots/code_viewer.png)
-
-# ⚙ Installation
-
-## Clone the repository
+Clone the repository
 
 ```bash
 git clone https://github.com/Chetan-Nandam/AI-Powered-Verilog-Bug-Detector.git
@@ -200,33 +207,25 @@ git clone https://github.com/Chetan-Nandam/AI-Powered-Verilog-Bug-Detector.git
 cd AI-Powered-Verilog-Bug-Detector
 ```
 
----
-
-## Install dependencies
+Install dependencies
 
 ```bash
 pip install -r requirements.txt
 ```
 
----
-
-## Configure API Key
-
-Create a `.env` file in the project root.
+Create a `.env` file
 
 ```env
 GEMINI_API_KEY=YOUR_API_KEY
 ```
 
----
-
-## Run the application
+Run the application
 
 ```bash
 python app.py
 ```
 
-Open your browser and visit
+Open
 
 ```
 http://127.0.0.1:5000
@@ -234,46 +233,87 @@ http://127.0.0.1:5000
 
 ---
 
-# 🚧 Challenges & Learnings
+## Docker
 
-One of the biggest challenges during development was managing a growing frontend while integrating AI and compiler services into a seamless user experience.
+Build the Docker image
 
-Working on VeriAssist helped me strengthen my understanding of:
+```bash
+docker build -t veriassist .
+```
 
-- Flask web application development
-- AI API integration
-- Compiler error parsing
-- HTML, CSS and JavaScript
+Run the container
+
+```bash
+docker run -p 5000:5000 veriassist
+```
+
+---
+
+## Challenges
+
+Some challenges during development included:
+
+- Parsing compiler errors into structured information
+- Integrating AI responses into a consistent format
+- Handling API failures gracefully
+- Deploying Icarus Verilog with Docker on Render
+- Keeping the frontend responsive while AI analysis was running
+
+---
+
+## What I Learned
+
+Building VeriAssist gave me practical experience with:
+
+- Flask application development
+- REST-style request handling
+- Compiler integration
+- Docker deployment
+- Google Gemini API
+- Prompt engineering
+- Error parsing
 - Git and GitHub workflows
-- Modular Python application design
-- Building educational software around real engineering problems
 
 ---
 
-# 🔮 Future Improvements
+## Future Improvements
 
-- ☁ Deploy VeriAssist to the cloud
-- 📈 RTL simulation support
-- 🌊 Waveform generation and visualization
-- 💬 Interactive AI chat assistant for Verilog
-- 📁 Multi-file Verilog project support
-- 📚 Learning mode with Verilog tutorials and examples
+- Support for SystemVerilog
+- Multi-file project support
+- RTL simulation
+- Waveform generation
+- Download corrected Verilog code
+- AI chat assistant for Verilog
+- User accounts and history
 
 ---
 
-# 👨‍💻 Author
+## Author
 
 **Chetan Nandam**
 
-Electronics & Communication Engineering Student
+Electronics and Communication Engineering
 
-Interested in Semiconductor Technology, VLSI Design, Digital Design, FPGA Development and AI-assisted Engineering Tools.
+Interested in
 
-GitHub:
+- Semiconductor Technology
+- Digital Design
+- FPGA Development
+- VLSI
+- AI-assisted Engineering Tools
+
+GitHub
+
 https://github.com/Chetan-Nandam
 
 ---
 
-# ⭐ Support
+## License
 
-If you found this project interesting, consider giving it a ⭐ on GitHub
+This project is licensed under the MIT License.
+
+---
+
+## Support
+
+If you found this project useful, consider giving it a ⭐ on GitHub.
