@@ -49,19 +49,25 @@ The project is intended for students, beginners, and anyone learning digital des
 
 ### Landing Page
 
-![Landing Page](screenshots/landing_page.png)
+![Landing Page](assets/screenshots/landing_page.png)
 
 ---
 
 ### AI Analysis
 
-![Analysis](screenshots/analysis_dashboard.png)
+![Analysis](assets/screenshots/analysis_dashboard.png)
 
 ---
 
 ### Original vs Corrected Code
 
-![Code Viewer](screenshots/code_viewer.png)
+![Code Viewer](assets/screenshots/code_viewer.png)
+
+---
+## 🔗 Links
+
+- 🌐 **Live Demo:** https://veriassist-ai.onrender.com
+- 📂 **GitHub Repository:** https://github.com/Chetan-Nandam/VeriAssist-AI
 
 ---
 
@@ -202,9 +208,9 @@ VeriAssist
 Clone the repository
 
 ```bash
-git clone https://github.com/Chetan-Nandam/AI-Powered-Verilog-Bug-Detector.git
+git clone https://github.com/Chetan-Nandam/VeriAssist-AI.git
 
-cd AI-Powered-Verilog-Bug-Detector
+cd VeriAssist-AI
 ```
 
 Install dependencies
